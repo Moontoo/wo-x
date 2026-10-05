@@ -1,5 +1,5 @@
 // Categories remain mixed; premium containers enforce the requested colour/size gate.
-const CARGO_BALANCE_REVISION=6;
+const CARGO_BALANCE_REVISION=7;
 const cargoRiskProfiles=[
  {
   "surgeChance": 0.02,
@@ -80,7 +80,7 @@ const cargoRiskProfiles=[
   "label": "风险加码"
  },
  {
-  "surgeChance": 0.1,
+  "surgeChance": 0.08,
   "dudChance": 0.14,
   "normal": [
    5,
@@ -106,7 +106,7 @@ const cargoRiskProfiles=[
   "label": "高风险高回报"
  },
  {
-  "surgeChance": 0.13,
+  "surgeChance": 0.18,
   "dudChance": 0.2,
   "normal": [
    5,
@@ -132,7 +132,7 @@ const cargoRiskProfiles=[
   "label": "高风险高回报"
  },
  {
-  "surgeChance": 0.16,
+  "surgeChance": 0.26,
   "dudChance": 0.27,
   "normal": [
    5,
@@ -172,4 +172,46 @@ function pickCargoItem(pool,weights){
  let roll=Math.random()*total;
  for(let i=0;i<bands.length;i++){if(!bands[i].length)continue;roll-=weights[i];if(roll<0)return pick(bands[i]);}
  return pick(bands.findLast(band=>band.length));
+}
+
+// Roll the advertised outcome independently of funds, debt and play history.
+const cargoBreakEvenChances=[.90,.90,.82,.78,.65,.65];
+function cargoMinimumReds(t){return t.price>=6000000?3:0;}
+const cargoRedCache=new WeakMap();
+function cargoRedPool(pool){let reds=cargoRedCache.get(pool);if(!reds){reds=pool.filter(it=>it.fixedGrade===5);cargoRedCache.set(pool,reds);}return reds;}
+function cargoMeetsOutcome(t,items,win){return items.length===t.count&&new Set(items.filter(it=>it.fixedGrade===5).map(it=>it.key)).size>=cargoMinimumReds(t)&&(items.reduce((sum,it)=>sum+it.value,0)>=t.price)===win;}
+function cargoFallback(t,win){
+ const small=cargoItemPool(t,catalog).filter(it=>it.w===1&&it.h===1).sort((a,b)=>a.referencePrice-b.referencePrice);
+ const reds=small.filter(it=>it.fixedGrade===5),required=cargoMinimumReds(t);
+ if(!small.length||required&&!reds.length)throw Error('No compact cargo fallback');
+ const chosen=Array.from({length:t.count},(_,i)=>i<required?reds[i]:small[0]);
+ let value=chosen.reduce((sum,it)=>sum+it.referencePrice,0);
+ const budget=t.price*(win?1.08:.80);
+ for(let i=0;i<chosen.length;i++){
+  const pool=i<required?reds.filter(it=>!chosen.some((other,j)=>j!==i&&j<required&&other.key===it.key)):small,room=budget-value+chosen[i].referencePrice;
+  const options=pool.filter(it=>it.referencePrice<=room);
+  if(options.length){const replacement=options[options.length-1];value+=replacement.referencePrice-chosen[i].referencePrice;chosen[i]=replacement;}
+ }
+ if(win&&value<t.price){
+  for(let i=0;i<chosen.length&&value<t.price;i++){
+   const pool=i<required?reds.filter(it=>!chosen.some((other,j)=>j!==i&&j<required&&other.key===it.key)):small,need=t.price-value+chosen[i].referencePrice;
+   const replacement=pool.find(it=>it.referencePrice>=need)||pool[pool.length-1];
+   if(replacement.referencePrice>chosen[i].referencePrice){value+=replacement.referencePrice-chosen[i].referencePrice;chosen[i]=replacement;}
+  }
+ }
+ const items=pack(t,small,null,cargoRiskProfiles[0].normal,chosen);
+ if(!cargoMeetsOutcome(t,items,win))throw Error('Cargo outcome could not be filled');
+ return items;
+}
+function drawBalancedCargo(t,index){
+ const win=Math.random()<cargoBreakEvenChances[index],weights=cargoDrawWeights(index);
+ const reds=cargoRedPool(cargoItemPool(t,catalog));
+ for(let attempt=0;attempt<64;attempt++){
+  const remaining=reds.slice(),required=[];
+  for(let i=0;i<cargoMinimumReds(t);i++){const item=pickCatalog(remaining,weights);required.push(item);remaining.splice(remaining.indexOf(item),1);}
+  const items=pack(t,catalog,null,weights,required);
+  const value=items.reduce((sum,it)=>sum+it.value,0),ceiling=[1.20,1.22,1.30,Infinity,Infinity,Infinity][index];
+  if(cargoMeetsOutcome(t,items,win)&&(!win||weights===cargoRiskProfiles[index].surge||value<=t.price*ceiling))return items;
+ }
+ return cargoFallback(t,win);
 }

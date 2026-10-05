@@ -37,19 +37,21 @@ try{
 function fit(occupied,w,h,iw,ih){const spots=[];for(let y=0;y<=h-ih;y++)for(let x=0;x<=w-iw;x++){let free=true;for(let dy=0;dy<ih;dy++)for(let dx=0;dx<iw;dx++)if(occupied[(y+dy)*w+x+dx])free=false;if(free)spots.push({x,y});}return spots.length?pick(spots):null;}
 function pickCatalog(pool,weights){return pickCargoItem(pool,weights);}
 function mark(occupied,w,it,pos){for(let dy=0;dy<it.h;dy++)for(let dx=0;dx<it.w;dx++)occupied[(pos.y+dy)*w+pos.x+dx]=true;}
-function pack(t,pool,first=null,weights=cargoRiskProfiles[0].normal){
+function pack(t,pool,first=null,weights=cargoRiskProfiles[0].normal,required=[]){
  pool=cargoItemPool(t,pool);if(!pool.length)return [];if(first&&!cargoAllowsItem(t,first))first=null;
+ if(required.some(it=>!cargoAllowsItem(t,it)))return [];
  const occupied=Array(t.w*t.h).fill(false),items=[];
  for(let i=0;i<t.count;i++){
   let data,pos;
-  for(let attempt=0;attempt<12;attempt++){data=i===0&&first?first:pickCatalog(pool,weights);pos=fit(occupied,t.w,t.h,data.w,data.h);if(pos)break;}
+  for(let attempt=0;attempt<12;attempt++){data=i===0&&first?first:i<required.length?required[i]:pickCatalog(pool,weights);pos=fit(occupied,t.w,t.h,data.w,data.h);if(pos)break;}
+  if(!pos&&i<required.length)return [];
   if(!pos){const fits=pool.filter(x=>fit(occupied,t.w,t.h,x.w,x.h));if(!fits.length)break;data=pickCatalog(fits,weights);pos=fit(occupied,t.w,t.h,data.w,data.h);}
   mark(occupied,t.w,data,pos);items.push({...data,...pos,value:data.referencePrice,grade:data.fixedGrade,revealed:false});
  }
  return items;
 }
 function generate(t,index){
- const items=pack(t,catalog,null,cargoDrawWeights(index));items.forEach((it,i)=>it.uid='C'+s.round+'-'+index+'-'+i);
+ const items=drawBalancedCargo(t,index);items.forEach((it,i)=>it.uid='C'+s.round+'-'+index+'-'+i);
  return {...t,id:'HB-'+String(s.round).padStart(3,'0')+'-'+(index+1),items};
 }
 function ensure(){if(s.offers.some(t=>t.cat||!Number.isInteger(t.art)))s.offers=[];if(!s.offers.length&&!s.current)s.offers=cargoTypes.map(generate);}
@@ -58,7 +60,7 @@ function heading(k,t,p){return `<div class="intro"><div><div class="eyebrow">${k
 function renderGrid(){ensure();persist();document.title='港口盲箱 · 格子开箱';document.getElementById('cash').textContent=money(s.cash);document.getElementById('debtStatus').textContent=s.loan.balance?'未还贷款 '+money(s.loan.balance):'无未还贷款';document.getElementById('day').textContent=`第 ${s.round} 批`;document.getElementById('stockCount').textContent=s.stock.length;document.querySelectorAll('nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===s.view));document.getElementById('game').innerHTML=s.view==='loan'?loanGrid():s.view==='library'?libraryGrid():s.view==='warehouse'?warehouseGrid():s.view==='ledger'?ledgerGrid():s.current?unboxGrid():market();if(typeof initScratch==='function')initScratch();}
 function containerVisual(t){const cell=containerArtwork.width/3,row=containerArtwork.height/2;return `<svg class="container-image" viewBox="0 0 ${cell} ${row}" role="img" aria-label="${t.name}" preserveAspectRatio="xMidYMid meet"><svg x="0" y="0" width="${cell}" height="${row}" style="overflow:hidden"><image href="${containerArtwork.src}" x="${-(t.art%3)*cell}" y="${-Math.floor(t.art/3)*row}" width="${containerArtwork.width}" height="${containerArtwork.height}" /></svg></svg>`;}
 function market(){
- return heading('CARGO / MARKET','选一箱，揭晓你的运气。','物品分类不限，回本机会已提升。高价箱限制小尺寸白绿物品，仍有亏损风险；低价箱也能开出顶级物品。')+`<div class="cards">${s.offers.map((t,i)=>`<article class="lot container-lot" style="--container-tint:${t.tint}"><div class="container-visual">${containerVisual(t)}<span class="container-number">0${i+1}</span></div><div class="lot-head"><div class="eyebrow">${t.w} × ${t.h} 格 / ${t.items.length} 件货物</div><div class="serial">${t.id}</div></div><div class="lot-body"><h3>${t.name}</h3><p>${cargoRiskProfiles[i].label} · 分类随机</p><div class="lot-bottom"><div class="price"><small>整箱售价</small><strong>${money(t.price)}</strong></div><button data-buy="${i}" ${s.cash<t.price?'disabled':''}>购买开箱</button></div></div></article>`).join('')}</div><div class="notice">600万、800万、1000万箱中，白色、绿色物品只允许3×3或2×4尺寸。物品分类不限；低价箱可抽到全部491件物品。回本机会已提升，但任何价位都不保证赚钱。标价与实际占格保持不变。</div>${s.cash<cargoTypes[0].price?`<div class="notice negative">现金不足以购买最便宜的箱子。${s.stock.length?'去仓库出售货物补充资金。':'可申请贷款周转，或在页面底部重新开局。'}</div>`:''}<button id="refreshCargo" class="secondary">换一批货源</button> <button data-view="loan" class="secondary">贷款周转</button>`;
+ return heading('CARGO / MARKET','选一箱，揭晓你的运气。','低价箱更容易回本，高价箱保留大幅盈亏。600万及以上每箱至少三件红色物品，分类随机。')+`<div class="cards">${s.offers.map((t,i)=>`<article class="lot container-lot" style="--container-tint:${t.tint}"><div class="container-visual">${containerVisual(t)}<span class="container-number">0${i+1}</span></div><div class="lot-head"><div class="eyebrow">${t.w} × ${t.h} 格 / ${t.items.length} 件货物</div><div class="serial">${t.id}</div></div><div class="lot-body"><h3>${t.name}</h3><p>${cargoRiskProfiles[i].label} · 分类随机 · 回本约${Math.round(cargoBreakEvenChances[i]*100)}%</p><div class="lot-bottom"><div class="price"><small>整箱售价</small><strong>${money(t.price)}</strong></div><button data-buy="${i}" ${s.cash<t.price?'disabled':''}>购买开箱</button></div></div></article>`).join('')}</div><div class="notice">150万、250万箱回本机会约90%，400万约82%，600万约78%，800万、1000万约65%。600万及以上每箱至少三件红色物品；白色、绿色物品只允许3×3或2×4尺寸。回本按整箱标价货值计算，贷款还款另计。分类随机，标价与占格保持不变。</div>${s.cash<cargoTypes[0].price?`<div class="notice negative">现金不足以购买最便宜的箱子。${s.stock.length?'去仓库出售货物补充资金。':'可申请贷款周转，或在页面底部重新开局。'}</div>`:''}<button id="refreshCargo" class="secondary">换一批货源</button> <button data-view="loan" class="secondary">贷款周转</button>`;
 }
 function buy(i){if(s.current)return;const t=s.offers[i];if(!t||s.cash<t.price)return;s.cash-=t.price;s.current=t;lastSale=null;s.records.push({id:t.id,name:t.name,cost:t.price,revenue:0,total:t.items.length,sold:0});renderGrid();}
 function revealGrid(i){const t=s.current;if(!t||!t.items[i]||t.items[i].revealed)return;const it=t.items[i];it.revealed=true;lastRevealed=it.uid;s.stock.push({...it,record:t.id});renderGrid();lastRevealed=null;}
