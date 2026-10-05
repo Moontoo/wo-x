@@ -9,7 +9,7 @@ function gradeLegend(){return `<div class="grade-legend" aria-label="品级颜�
 let lastRevealed=null;
 const cargoTypes=[{name:'01号集装箱',cat:null,price:1500000,w:6,h:6,count:7,tint:'#32c7df',art:0},{name:'02号集装箱',cat:null,price:2500000,w:8,h:6,count:9,tint:'#59b68e',art:1},{name:'03号集装箱',cat:null,price:4000000,w:8,h:8,count:11,tint:'#718ce5',art:2},{name:'04号集装箱',cat:null,price:6000000,w:10,h:8,count:12,tint:'#ee934c',art:3},{name:'05号集装箱',cat:null,price:8000000,w:10,h:10,count:16,tint:'#dd6268',art:4},{name:'06号集装箱',cat:null,price:10000000,w:12,h:10,count:20,tint:'#dfb458',art:5}];
 let s,canSave=true;
-function newGame(){return {version:2,pricingRevision:3,cash:START_CASH,round:1,stock:[],records:[],offers:[],current:null,view:'port'};}
+function newGame(){return {version:2,pricingRevision:3,balanceRevision:CARGO_BALANCE_REVISION,cash:START_CASH,round:1,stock:[],records:[],offers:[],current:null,view:'port'};}
 function canonical(it){return itemByKey.get(it.key)||catalog.find(x=>x.name===it.name||(it.sourceId&&x.cat==='电子物品'&&x.sourceId===it.sourceId));}
 function normalizeItem(it){const original=canonical(it);return original?{...it,...original,value:original.referencePrice,grade:original.fixedGrade}:null;}
 function migrate(old){
@@ -28,25 +28,26 @@ try{
  s=cached||(legacy?migrate(legacy):newGame());
  if(!Number.isFinite(s.cash)||!Array.isArray(s.offers)||!Array.isArray(s.stock)||!Array.isArray(s.records))s=newGame();
  if(s.pricingRevision!==3){s.cash=Math.max(s.cash,START_CASH);s.pricingRevision=3;s.offers=[];}
+ if(s.balanceRevision!==CARGO_BALANCE_REVISION){s.offers=[];s.balanceRevision=CARGO_BALANCE_REVISION;}
  s.stock=s.stock.map(normalizeItem).filter(Boolean);
  for(const t of [...s.offers,...(s.current?[s.current]:[])])t.items=t.items.map(normalizeItem).filter(Boolean);
 }catch{s=newGame();canSave=false;}
 
 function fit(occupied,w,h,iw,ih){const spots=[];for(let y=0;y<=h-ih;y++)for(let x=0;x<=w-iw;x++){let free=true;for(let dy=0;dy<ih;dy++)for(let dx=0;dx<iw;dx++)if(occupied[(y+dy)*w+x+dx])free=false;if(free)spots.push({x,y});}return spots.length?pick(spots):null;}
-function pickCatalog(pool){return pick(pool);}
+function pickCatalog(pool,weights){return pickCargoItem(pool,weights);}
 function mark(occupied,w,it,pos){for(let dy=0;dy<it.h;dy++)for(let dx=0;dx<it.w;dx++)occupied[(pos.y+dy)*w+pos.x+dx]=true;}
-function pack(t,pool,first){
+function pack(t,pool,first=null,weights=cargoRiskProfiles[0].normal){
  const occupied=Array(t.w*t.h).fill(false),items=[];
  for(let i=0;i<t.count;i++){
   let data,pos;
-  for(let attempt=0;attempt<12;attempt++){data=i===0&&first?first:pickCatalog(pool);pos=fit(occupied,t.w,t.h,data.w,data.h);if(pos)break;}
-  if(!pos){const fits=pool.filter(x=>fit(occupied,t.w,t.h,x.w,x.h));if(!fits.length)break;data=pickCatalog(fits);pos=fit(occupied,t.w,t.h,data.w,data.h);}
+  for(let attempt=0;attempt<12;attempt++){data=i===0&&first?first:pickCatalog(pool,weights);pos=fit(occupied,t.w,t.h,data.w,data.h);if(pos)break;}
+  if(!pos){const fits=pool.filter(x=>fit(occupied,t.w,t.h,x.w,x.h));if(!fits.length)break;data=pickCatalog(fits,weights);pos=fit(occupied,t.w,t.h,data.w,data.h);}
   mark(occupied,t.w,data,pos);items.push({...data,...pos,value:data.referencePrice,grade:data.fixedGrade,revealed:false});
  }
  return items;
 }
 function generate(t,index){
- const items=pack(t,catalog);items.forEach((it,i)=>it.uid='C'+s.round+'-'+index+'-'+i);
+ const items=pack(t,catalog,null,cargoDrawWeights(index));items.forEach((it,i)=>it.uid='C'+s.round+'-'+index+'-'+i);
  return {...t,id:'HB-'+String(s.round).padStart(3,'0')+'-'+(index+1),items};
 }
 function ensure(){if(s.offers.some(t=>t.cat||!Number.isInteger(t.art)))s.offers=[];if(!s.offers.length&&!s.current)s.offers=cargoTypes.map(generate);}
@@ -55,7 +56,7 @@ function heading(k,t,p){return `<div class="intro"><div><div class="eyebrow">${k
 function renderGrid(){ensure();persist();document.title='港口盲箱 · 格子开箱';document.getElementById('cash').textContent=money(s.cash);document.getElementById('day').textContent=`第 ${s.round} 批`;document.getElementById('stockCount').textContent=s.stock.length;document.querySelectorAll('nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===s.view));document.getElementById('game').innerHTML=s.view==='library'?libraryGrid():s.view==='warehouse'?warehouseGrid():s.view==='ledger'?ledgerGrid():s.current?unboxGrid():market();if(typeof initScratch==='function')initScratch();}
 function containerVisual(t){const cell=containerArtwork.width/3,row=containerArtwork.height/2;return `<svg class="container-image" viewBox="0 0 ${cell} ${row}" role="img" aria-label="${t.name}" preserveAspectRatio="xMidYMid meet"><svg x="0" y="0" width="${cell}" height="${row}" style="overflow:hidden"><image href="${containerArtwork.src}" x="${-(t.art%3)*cell}" y="${-Math.floor(t.art/3)*row}" width="${containerArtwork.width}" height="${containerArtwork.height}" /></svg></svg>`;}
 function market(){
- return heading('CARGO / MARKET','选一箱，揭晓你的运气。','每箱货物从全部491件物品中随机抽取，物品价值固定使用截图标价。')+`<div class="cards">${s.offers.map((t,i)=>`<article class="lot container-lot" style="--container-tint:${t.tint}"><div class="container-visual">${containerVisual(t)}<span class="container-number">0${i+1}</span></div><div class="lot-head"><div class="eyebrow">${t.w} × ${t.h} 格 / ${t.items.length} 件货物</div><div class="serial">${t.id}</div></div><div class="lot-body"><h3>${t.name}</h3><p>全库随机货物 · 实际占格</p><div class="lot-bottom"><div class="price"><small>整箱售价</small><strong>${money(t.price)}</strong></div><button data-buy="${i}" ${s.cash<t.price?'disabled':''}>购买开箱</button></div></div></article>`).join('')}</div><div class="notice">不同颜色区分不同售价。物品库共491件，所有集装箱都从同一物品库随机抽取。背包按自身占格计算，房卡均为1×1。完整标价可在物品图鉴查看。</div>${s.cash<cargoTypes[0].price?`<div class="notice negative">现金不足以购买最便宜的箱子。${s.stock.length?'去仓库出售货物补充资金。':'可以在页面底部重新开局。'}</div>`:''}<button id="refreshCargo" class="secondary">换一批货源</button>`;
+ return heading('CARGO / MARKET','选一箱，揭晓你的运气。','货物类型全库随机。高价箱波动更大、大奖机会更高；低价箱也可能开出顶级物品。')+`<div class="cards">${s.offers.map((t,i)=>`<article class="lot container-lot" style="--container-tint:${t.tint}"><div class="container-visual">${containerVisual(t)}<span class="container-number">0${i+1}</span></div><div class="lot-head"><div class="eyebrow">${t.w} × ${t.h} 格 / ${t.items.length} 件货物</div><div class="serial">${t.id}</div></div><div class="lot-body"><h3>${t.name}</h3><p>${cargoRiskProfiles[i].label} · 全库随机</p><div class="lot-bottom"><div class="price"><small>整箱售价</small><strong>${money(t.price)}</strong></div><button data-buy="${i}" ${s.cash<t.price?'disabled':''}>购买开箱</button></div></div></article>`).join('')}</div><div class="notice">不同颜色区分不同售价。高价箱提高高价值货物的抽取机会，同时可能大幅亏损；低价箱保留小概率中大奖的机会。所有491件物品均可抽到，标价与实际占格保持不变。</div>${s.cash<cargoTypes[0].price?`<div class="notice negative">现金不足以购买最便宜的箱子。${s.stock.length?'去仓库出售货物补充资金。':'可以在页面底部重新开局。'}</div>`:''}<button id="refreshCargo" class="secondary">换一批货源</button>`;
 }
 function buy(i){if(s.current)return;const t=s.offers[i];if(!t||s.cash<t.price)return;s.cash-=t.price;s.current=t;s.records.push({id:t.id,name:t.name,cost:t.price,revenue:0,total:t.items.length,sold:0});renderGrid();}
 function revealGrid(i){const t=s.current;if(!t||!t.items[i]||t.items[i].revealed)return;const it=t.items[i];it.revealed=true;lastRevealed=it.uid;s.stock.push({...it,record:t.id});renderGrid();lastRevealed=null;}
