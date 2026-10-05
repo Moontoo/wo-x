@@ -1,6 +1,6 @@
 const electronicAtlases=[
   {
-    "src": "assets/electronics-sheet-1-v1.png",
+    "src": "assets/electronics-clean-1-v3.png",
     "width": 1660,
     "height": 947,
     "rows": 5,
@@ -8,38 +8,38 @@ const electronicAtlases=[
       {
         "x": 190,
         "y": 10,
-        "width": 201,
-        "height": 179
+        "width": 202,
+        "height": 184
       },
       {
         "x": 723,
         "y": 2,
         "width": 207,
-        "height": 187
+        "height": 202
       },
       {
         "x": 1229,
         "y": 14,
         "width": 258,
-        "height": 175
+        "height": 180
       },
       {
         "x": 217,
-        "y": 189,
+        "y": 198,
         "width": 146,
-        "height": 190
+        "height": 184
       },
       {
-        "x": 676,
-        "y": 189,
-        "width": 307,
-        "height": 181
+        "x": 675,
+        "y": 209,
+        "width": 308,
+        "height": 161
       },
       {
         "x": 1230,
-        "y": 189,
+        "y": 194,
         "width": 235,
-        "height": 190
+        "height": 193
       },
       {
         "x": 173,
@@ -48,16 +48,16 @@ const electronicAtlases=[
         "height": 183
       },
       {
-        "x": 703,
+        "x": 702,
         "y": 380,
-        "width": 228,
+        "width": 229,
         "height": 174
       },
       {
         "x": 1237,
-        "y": 379,
+        "y": 384,
         "width": 223,
-        "height": 186
+        "height": 181
       },
       {
         "x": 169,
@@ -67,15 +67,15 @@ const electronicAtlases=[
       },
       {
         "x": 685,
-        "y": 568,
+        "y": 565,
         "width": 280,
-        "height": 190
+        "height": 182
       },
       {
-        "x": 1178,
+        "x": 1177,
         "y": 574,
-        "width": 363,
-        "height": 184
+        "width": 364,
+        "height": 162
       },
       {
         "x": 184,
@@ -85,118 +85,118 @@ const electronicAtlases=[
       },
       {
         "x": 722,
-        "y": 758,
+        "y": 752,
         "width": 206,
-        "height": 173
+        "height": 179
       },
       {
         "x": 1271,
-        "y": 758,
+        "y": 741,
         "width": 184,
-        "height": 185
+        "height": 202
       }
     ]
   },
   {
-    "src": "assets/electronics-sheet-2-v1.png",
+    "src": "assets/electronics-clean-2-v3.png",
     "width": 1374,
     "height": 1145,
     "rows": 5,
     "cells": [
       {
-        "x": 128,
-        "y": 22,
-        "width": 243,
-        "height": 207
+        "x": 127,
+        "y": 21,
+        "width": 245,
+        "height": 218
       },
       {
-        "x": 586,
-        "y": 9,
-        "width": 202,
-        "height": 220
+        "x": 585,
+        "y": 8,
+        "width": 204,
+        "height": 229
       },
       {
         "x": 1064,
-        "y": 18,
+        "y": 17,
         "width": 192,
-        "height": 211
+        "height": 231
       },
       {
         "x": 123,
-        "y": 229,
-        "width": 225,
-        "height": 229
-      },
-      {
-        "x": 482,
-        "y": 229,
-        "width": 419,
-        "height": 229
-      },
-      {
-        "x": 1043,
-        "y": 229,
-        "width": 222,
-        "height": 229
-      },
-      {
-        "x": 106,
-        "y": 458,
-        "width": 252,
-        "height": 229
+        "y": 258,
+        "width": 226,
+        "height": 232
       },
       {
         "x": 481,
-        "y": 458,
+        "y": 285,
+        "width": 420,
+        "height": 185
+      },
+      {
+        "x": 1043,
+        "y": 287,
+        "width": 222,
+        "height": 176
+      },
+      {
+        "x": 106,
+        "y": 491,
+        "width": 252,
+        "height": 232
+      },
+      {
+        "x": 481,
+        "y": 506,
         "width": 424,
-        "height": 229
+        "height": 191
       },
       {
         "x": 1114,
-        "y": 458,
+        "y": 476,
         "width": 101,
-        "height": 229
+        "height": 239
       },
       {
         "x": 119,
-        "y": 687,
+        "y": 730,
         "width": 224,
-        "height": 229
+        "height": 215
       },
       {
         "x": 566,
-        "y": 687,
-        "width": 323,
-        "height": 229
+        "y": 747,
+        "width": 257,
+        "height": 176
       },
       {
         "x": 1063,
-        "y": 687,
+        "y": 736,
         "width": 187,
-        "height": 229
+        "height": 198
       },
       {
         "x": 120,
-        "y": 916,
+        "y": 953,
         "width": 218,
-        "height": 217
+        "height": 180
       },
       {
-        "x": 581,
-        "y": 916,
-        "width": 214,
-        "height": 229
+        "x": 580,
+        "y": 941,
+        "width": 215,
+        "height": 204
       },
       {
-        "x": 1045,
-        "y": 916,
-        "width": 230,
-        "height": 228
+        "x": 1044,
+        "y": 936,
+        "width": 231,
+        "height": 209
       }
     ]
   },
   {
-    "src": "assets/electronics-sheet-3-v1.png",
+    "src": "assets/electronics-clean-3-v3.png",
     "width": 971,
     "height": 1619,
     "rows": 5,
@@ -205,67 +205,67 @@ const electronicAtlases=[
         "x": 31,
         "y": 75,
         "width": 277,
-        "height": 249
+        "height": 250
       },
       {
         "x": 402,
-        "y": 66,
-        "width": 170,
-        "height": 251
+        "y": 65,
+        "width": 171,
+        "height": 252
       },
       {
         "x": 687,
         "y": 50,
         "width": 232,
-        "height": 274
+        "height": 280
       },
       {
         "x": 18,
-        "y": 413,
-        "width": 306,
-        "height": 191
+        "y": 412,
+        "width": 310,
+        "height": 192
       },
       {
-        "x": 339,
+        "x": 338,
         "y": 371,
-        "width": 283,
+        "width": 285,
         "height": 276
       },
       {
         "x": 650,
-        "y": 324,
-        "width": 281,
-        "height": 324
+        "y": 373,
+        "width": 282,
+        "height": 283
       },
       {
         "x": 7,
-        "y": 711,
-        "width": 315,
-        "height": 223
+        "y": 710,
+        "width": 316,
+        "height": 224
       },
       {
         "x": 369,
         "y": 713,
-        "width": 278,
+        "width": 234,
         "height": 234
       },
       {
-        "x": 647,
-        "y": 648,
-        "width": 315,
-        "height": 281
+        "x": 632,
+        "y": 734,
+        "width": 331,
+        "height": 196
       },
       {
         "x": 56,
         "y": 993,
         "width": 230,
-        "height": 302
+        "height": 256
       },
       {
-        "x": 332,
+        "x": 331,
         "y": 1029,
-        "width": 304,
-        "height": 195
+        "width": 305,
+        "height": 196
       },
       {
         "x": 665,
@@ -275,26 +275,26 @@ const electronicAtlases=[
       },
       {
         "x": 53,
-        "y": 1295,
+        "y": 1290,
         "width": 218,
-        "height": 264
+        "height": 269
       },
       {
         "x": 336,
         "y": 1299,
-        "width": 311,
+        "width": 276,
         "height": 268
       },
       {
-        "x": 647,
-        "y": 1354,
-        "width": 308,
-        "height": 155
+        "x": 632,
+        "y": 1353,
+        "width": 323,
+        "height": 156
       }
     ]
   },
   {
-    "src": "assets/electronics-sheet-4-v1.png",
+    "src": "assets/electronics-clean-4-v3.png",
     "width": 1024,
     "height": 1536,
     "rows": 5,
@@ -307,81 +307,81 @@ const electronicAtlases=[
       },
       {
         "x": 383,
-        "y": 60,
+        "y": 59,
         "width": 258,
-        "height": 215
+        "height": 216
       },
       {
         "x": 705,
         "y": 37,
         "width": 282,
-        "height": 270
+        "height": 278
       },
       {
         "x": 55,
         "y": 355,
-        "width": 232,
+        "width": 233,
         "height": 255
       },
       {
         "x": 398,
         "y": 340,
         "width": 247,
-        "height": 274
+        "height": 278
       },
       {
         "x": 755,
-        "y": 307,
+        "y": 374,
         "width": 185,
-        "height": 296
+        "height": 229
       },
       {
         "x": 68,
         "y": 648,
         "width": 208,
-        "height": 274
+        "height": 277
       },
       {
         "x": 400,
         "y": 671,
         "width": 237,
-        "height": 239
+        "height": 240
       },
       {
         "x": 722,
-        "y": 648,
+        "y": 647,
         "width": 257,
-        "height": 274
+        "height": 288
       },
       {
-        "x": 35,
+        "x": 34,
         "y": 967,
-        "width": 285,
+        "width": 287,
         "height": 245
       },
       {
         "x": 365,
         "y": 951,
-        "width": 318,
-        "height": 278
+        "width": 282,
+        "height": 289
       },
       {
-        "x": 683,
-        "y": 922,
-        "width": 326,
-        "height": 269
+        "x": 670,
+        "y": 1038,
+        "width": 339,
+        "height": 153
       },
       {
         "x": 40,
         "y": 1245,
-        "width": 272,
+        "width": 273,
         "height": 266
       },
       {
         "x": 365,
-        "y": 1229,
+        "y": 1266,
         "width": 296,
-        "height": 292
+        "height": 255
       },
       {
         "x": 763,
@@ -392,7 +392,7 @@ const electronicAtlases=[
     ]
   },
   {
-    "src": "assets/electronics-sheet-5-v1.png",
+    "src": "assets/electronics-clean-5-v3.png",
     "width": 1536,
     "height": 1024,
     "rows": 2,
@@ -419,7 +419,7 @@ const electronicAtlases=[
         "x": 73,
         "y": 607,
         "width": 369,
-        "height": 329
+        "height": 330
       }
     ]
   }

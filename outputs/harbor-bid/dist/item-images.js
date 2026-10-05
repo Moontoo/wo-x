@@ -10,5 +10,6 @@ function itemVisual(it,kind='tile'){
  if(it.sourceId){atlas=electronicAtlases[Math.floor((it.sourceId-1)/15)];box=atlas?.cells[(it.sourceId-1)%15];}
  else if(it.imageSpec){atlas=catalogSheets[it.imageSpec.sheet];box=it.imageSpec;}
  if(!atlas||!box)return `<span class="${kind==='tile'?'cargo-symbol':'fallback-icon'}">${it.icon}</span>`;
- return `<svg class="item-image item-image-${kind}" viewBox="${box.x} ${box.y} ${box.width} ${box.height}" role="img" aria-label="${escapeHTML(it.name)}" preserveAspectRatio="xMidYMid meet"><image href="${atlas.src}" x="0" y="0" width="${atlas.width}" height="${atlas.height}" /></svg>`;
+ // Clip the atlas in its own viewport before the outer SVG adds letterboxing.
+ return `<svg class="item-image item-image-${kind}" viewBox="0 0 ${box.width} ${box.height}" role="img" aria-label="${escapeHTML(it.name)}" preserveAspectRatio="xMidYMid meet"><svg x="0" y="0" width="${box.width}" height="${box.height}" style="overflow:hidden"><image href="${atlas.src}" x="${-box.x}" y="${-box.y}" width="${atlas.width}" height="${atlas.height}" /></svg></svg>`;
 }
