@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const root='outputs/harbor-bid/dist/',saved=new Map(),nodes=new Map();
 const document={title:'',getElementById:id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',innerHTML:'',showModal(){},close(){}});return nodes.get(id);},querySelectorAll:()=>[],addEventListener:()=>{}};
-const sources=['catalog.js','all-items.js','electronics-atlases.js','container-art.js','item-images.js','loot.js','grid.js'].map(f=>fs.readFileSync(root+f,'utf8')).join('\n');
+const sources=['catalog.js','all-items.js','electronics-atlases.js','container-art.js','item-images.js','loot.js','loans.js','grid.js'].map(f=>fs.readFileSync(root+f,'utf8')).join('\n');
 function context(save=saved){return vm.createContext({console,Math,JSON,localStorage:{getItem:k=>save.get(k)||null,setItem:(k,v)=>save.set(k,v)},document});}
 const ctx=context();vm.runInContext(sources,ctx);
 const expected=JSON.parse(fs.readFileSync('outputs/全部物品数据.json','utf8')).items;
