@@ -1,5 +1,5 @@
 'use strict';
-const scratchMasks=new Map();
+const scratchMasks=new Map(),scratchPendingReveals=new Set();
 function scratchedRatio(ctx,width,height){const pixels=ctx.getImageData(0,0,width,height).data;let clear=0,count=0;for(let y=2;y<height;y+=5)for(let x=2;x<width;x+=5){count++;if(pixels[(y*width+x)*4+3]<80)clear++;}return count?clear/count:0;}
 function initScratch(){document.querySelectorAll('canvas[data-scratch]').forEach(canvas=>{
  const index=Number(canvas.dataset.scratch),item=s.current.items[index],button=canvas.parentElement,rect=button.getBoundingClientRect(),width=Math.max(1,Math.round(rect.width-2)),height=Math.max(1,Math.round(rect.height-2));canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d',{willReadFrequently:true});
@@ -7,7 +7,7 @@ function initScratch(){document.querySelectorAll('canvas[data-scratch]').forEach
  scratchMasks.set(item.uid,canvas);let pointer=null,last=null,completed=false;
  function point(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};}
  function erase(from,to){ctx.globalCompositeOperation='destination-out';ctx.lineWidth=Math.max(18,Math.min(34,Math.min(width,height)*.42));ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(from.x,from.y);ctx.lineTo(to.x,to.y);ctx.stroke();ctx.globalCompositeOperation='source-over';}
- function complete(){if(completed||scratchedRatio(ctx,width,height)<.5)return;completed=true;pointer=null;scratchMasks.delete(item.uid);button.classList.add('peeling');setTimeout(()=>{if(s.current&&s.current.items[index]===item&&!item.revealed)revealGrid(index);},380);}
+ function complete(){if(completed||scratchedRatio(ctx,width,height)<.5)return;completed=true;pointer=null;scratchMasks.delete(item.uid);button.classList.add('peeling');scratchPendingReveals.add(item.uid);if(typeof updateStopLossControls==='function')updateStopLossControls();setTimeout(()=>{scratchPendingReveals.delete(item.uid);if(s.current&&s.current.items[index]===item&&!item.revealed)revealGrid(index);},380);}
  canvas.addEventListener('pointerdown',e=>{if(completed||pointer!==null||(e.pointerType==='mouse'&&e.button!==0))return;e.preventDefault();pointer=e.pointerId;last=point(e);canvas.setPointerCapture(pointer);});
  canvas.addEventListener('pointermove',e=>{if(completed||pointer!==e.pointerId)return;e.preventDefault();const events=e.getCoalescedEvents?.()||[e];for(const sample of events.length?events:[e]){const next=point(sample);if(Math.hypot(next.x-last.x,next.y-last.y)>=.5){erase(last,next);last=next;}}complete();});
  function stop(e){if(pointer!==e.pointerId)return;pointer=null;last=null;complete();}

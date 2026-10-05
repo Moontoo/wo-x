@@ -2,3 +2,6 @@
 
 /* Loan controls and sale receipts. */
 .wallet #debtStatus{display:block;color:#d4af76;max-width:190px;line-height:1.4}.loan-options h2{font:700 32px monospace;color:var(--orange);margin:16px 0}.loan-options button{width:100%}.loan-rule{margin:22px 0}.sale-receipt{display:flex;gap:8px 20px;flex-wrap:wrap}.sale-receipt strong{flex-basis:100%}.sale-receipt span{font-size:14px}@media(max-width:850px){.wallet{flex-wrap:wrap;justify-content:flex-end;max-width:55%}.wallet #debtStatus{flex-basis:100%;text-align:right}}
+
+/* Keep the recovery action immediately before the revealed count. */
+.unbox-progress{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.stop-loss{white-space:nowrap;border-color:#d4af76;color:#e8c78e}.unbox-layout .panel>.intro{flex-wrap:wrap}.unbox-layout .panel>.intro h2{margin:0}@media(max-width:520px){.unbox-progress{gap:6px}.stop-loss{padding:10px 12px}}
