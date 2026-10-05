@@ -1,5 +1,5 @@
 // Value bands are independent of item category or colour.
-const CARGO_BALANCE_REVISION=4;
+const CARGO_BALANCE_REVISION=5;
 const cargoRiskProfiles=[
  {surgeChance:.02,normal:[65,20,12,2.9,.1],surge:[12,12,35,36,5],label:'小额试运气'},
  {surgeChance:.07,normal:[65,20,12,2.9,.1],surge:[12,12,35,36,5],label:'进阶淘货'},
@@ -9,7 +9,9 @@ const cargoRiskProfiles=[
  {surgeChance:.25,normal:[80,15,4,.9,.1],surge:[10,10,33,40,7],label:'高风险高回报'}
 ];
 function cargoValueBand(price){return price<50000?0:price<200000?1:price<1000000?2:price<5000000?3:4;}
-function cargoDrawWeights(index){const profile=cargoRiskProfiles[index];return Math.random()<profile.surgeChance?profile.surge:profile.normal;}
+// More parcels share a similar value budget; extra parcels mainly add low-value goods.
+const cargoWeightScales=[7/11,9/14,11/17,12/18,16/24,20/30].map(scale=>scale*.90);
+function cargoDrawWeights(index){const profile=cargoRiskProfiles[index],weights=Math.random()<profile.surgeChance?profile.surge:profile.normal,scale=cargoWeightScales[index];return weights.map((weight,band)=>band===0?100-(100-weight)*scale:weight*scale);}
 const cargoBandCache=new WeakMap();
 function pickCargoItem(pool,weights){
  let bands=cargoBandCache.get(pool);
