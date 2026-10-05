@@ -18,7 +18,7 @@ vm.runInContext(`
  }
  if(!wins||!losses)throw Error('missing outcomes');
  // Every item can fit in a mixed container with its exact dimensions and price.
- for(const it of catalog){const packed=pack(cargoTypes[5],[it],it);if(!packed.length||packed[0].key!==it.key||packed[0].value!==it.referencePrice)throw Error('unreachable item');seenCategories.add(packed[0].cat);}
+ for(const it of catalog){const type=cargoAllowsItem(cargoTypes[5],it)?cargoTypes[5]:cargoTypes[0];const packed=pack(type,[it],it);if(!packed.length||packed[0].key!==it.key||packed[0].value!==it.referencePrice)throw Error('unreachable item');seenCategories.add(packed[0].cat);}
  if(seenCategories.size!==10)throw Error('missing categories');
  buy(0);const paid=s.current.price,total=s.current.items.reduce((sum,it)=>sum+it.value,0);if(s.cash!==START_CASH-paid)throw Error('purchase');
  s.current.items.forEach((it,i)=>{revealGrid(i);revealGrid(i);});if(s.stock.length!==s.current.items.length)throw Error('duplicate reveal');
