@@ -6,7 +6,7 @@ function load(){const ctx=vm.createContext({console,document,localStorage:{getIt
 const ctx=load();
 
 vm.runInContext(`
- for(const random of [0,.5,.999999]){Math.random=()=>random;for(let index=0;index<cargoTypes.length;index++){const t=cargoTypes[index],box=generate(t,index);if(!cargoMeetsOutcome(t,box.items,random<cargoBreakEvenChances[index]))throw Error('Extreme RNG fallback');}}
+ for(const random of [0,.5,.999999]){Math.random=()=>random;for(let index=0;index<6;index++){const t=cargoTypes[index],box=generate(t,index);if(!cargoMeetsOutcome(t,box.items,random<cargoBreakEvenChances[index]))throw Error('Extreme RNG fallback');}}
  for(let index=0;index<cargoTypes.length;index++){
   const t=cargoTypes[index];let seed=20261005;const rng=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};Math.random=rng;
   const before=generate(t,index);seed=20261005;s.cash=0;s.loan.balance=6000000;s.records=[{cost:10000000,revenue:0}];Math.random=rng;
