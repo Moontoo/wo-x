@@ -33,7 +33,7 @@ const legacy=new Map([['harbor-grid-v1',JSON.stringify(old)]]),migration=context
 const html=fs.readFileSync('outputs/港口盲箱.html','utf8');assert(!/src="[^" ]+\.js"|href="[^" ]+\.css"|assets\/[\w-]+\.png/.test(html));assert(html.includes('data:image/png;base64,'));
 assert.equal(vm.runInContext('cargoTypes.filter(t=>t.cat===null).length',ctx),6);
 assert.equal(vm.runInContext('new Set(cargoTypes.map(t=>t.art)).size',ctx),6);
-assert(!vm.runInContext('generate.toString()',ctx).includes('target'));
+assert(!vm.runInContext('drawBalancedCargo.toString()',ctx).includes('s.cash'));assert(!vm.runInContext('drawBalancedCargo.toString()',ctx).includes('s.records'));
 const embedded=vm.createContext({console,Math,JSON,Blob,URL,atob,localStorage:{getItem:()=>null,setItem:()=>{}},document});
 const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(x=>x[1]).join('\n');vm.runInContext(scripts,embedded);
 assert(vm.runInContext('containerArtwork.src.startsWith("blob:")&&catalogSheets.every(x=>x.src.startsWith("blob:"))&&electronicAtlases.every(x=>x.src.startsWith("blob:"))',embedded));

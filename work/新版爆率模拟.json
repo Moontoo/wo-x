@@ -1,0 +1,85 @@
+{
+  "samples": 120000,
+  "report": [
+    {
+      "tier": 1,
+      "price": 1500000,
+      "samples": 20000,
+      "meanReturn": 1.0839036547666667,
+      "breakEvenChance": 0.8993,
+      "doubleChance": 0.0137,
+      "lossHalfChance": 0.02035,
+      "medianValue": 1622581,
+      "p95Value": 1786629,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 2,
+      "price": 2500000,
+      "samples": 20000,
+      "meanReturn": 1.0953650052400001,
+      "breakEvenChance": 0.8986,
+      "doubleChance": 0.01495,
+      "lossHalfChance": 0.01395,
+      "medianValue": 2715573,
+      "p95Value": 3034540,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 3,
+      "price": 4000000,
+      "samples": 20000,
+      "meanReturn": 1.0895970837,
+      "breakEvenChance": 0.82125,
+      "doubleChance": 0.00845,
+      "lossHalfChance": 0.01415,
+      "medianValue": 4373249,
+      "p95Value": 5157660,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 4,
+      "price": 6000000,
+      "samples": 20000,
+      "meanReturn": 1.2471435068666668,
+      "breakEvenChance": 0.78205,
+      "doubleChance": 0.04915,
+      "lossHalfChance": 0.0273,
+      "medianValue": 6826008,
+      "p95Value": 11919575,
+      "invalid": 0,
+      "minReds": 3
+    },
+    {
+      "tier": 5,
+      "price": 8000000,
+      "samples": 20000,
+      "meanReturn": 1.20850152969375,
+      "breakEvenChance": 0.6498,
+      "doubleChance": 0.06745,
+      "lossHalfChance": 0.0642,
+      "medianValue": 8639928,
+      "p95Value": 17671205,
+      "invalid": 0,
+      "minReds": 3
+    },
+    {
+      "tier": 6,
+      "price": 10000000,
+      "samples": 20000,
+      "meanReturn": 1.2406961036450002,
+      "breakEvenChance": 0.6545,
+      "doubleChance": 0.09235,
+      "lossHalfChance": 0.0832,
+      "medianValue": 10799997,
+      "p95Value": 25572969,
+      "invalid": 0,
+      "minReds": 3
+    }
+  ],
+  "migration": "cash, loans, stock, records and purchased cargo preserved; only unopened offers replaced",
+  "rule": "requested break-even chances; premium has at least three red items; white/green only exact 3x3 or 2x4; bounded fallback verified"
+}
