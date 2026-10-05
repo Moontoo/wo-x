@@ -1,5 +1,5 @@
 // Categories remain mixed; premium containers enforce the requested colour/size gate.
-const CARGO_BALANCE_REVISION=9;
+const CARGO_BALANCE_REVISION=10;
 const cargoRiskProfiles=[
  {
   "surgeChance": 0.035,
@@ -161,9 +161,9 @@ const cargoRiskProfiles=[
 function cargoValueBand(price){return price<50000?0:price<200000?1:price<1000000?2:price<5000000?3:4;}
 // Choose shared cargo quality before drawing individual items; never use player finances.
 function cargoDrawWeights(index){const profile=cargoRiskProfiles[index],roll=Math.random();return roll<profile.surgeChance?profile.surge:roll<profile.surgeChance+profile.dudChance?profile.dud:profile.normal;}
-function cargoAllowsItem(t,item){return t.price<6000000||item.fixedGrade>=2||(item.w===3&&item.h===3)||(item.w===2&&item.h===4);}
+function cargoAllowsItem(t,item){return t.unrestricted||t.price<6000000||item.fixedGrade>=2||(item.w===3&&item.h===3)||(item.w===2&&item.h===4);}
 const cargoPoolCache=new WeakMap();
-function cargoItemPool(t,pool){if(t.price<6000000)return pool;let filtered=cargoPoolCache.get(pool);if(!filtered){filtered=pool.filter(item=>cargoAllowsItem(t,item));cargoPoolCache.set(pool,filtered);}return filtered;}
+function cargoItemPool(t,pool){if(t.unrestricted||t.price<6000000)return pool;let filtered=cargoPoolCache.get(pool);if(!filtered){filtered=pool.filter(item=>cargoAllowsItem(t,item));cargoPoolCache.set(pool,filtered);}return filtered;}
 const cargoBandCache=new WeakMap();
 function pickCargoItem(pool,weights){
  let bands=cargoBandCache.get(pool);
@@ -176,11 +176,11 @@ function pickCargoItem(pool,weights){
 
 // Roll the advertised outcome independently of funds, debt and play history.
 const cargoBreakEvenChances=[.95,.95,.90,.85,.75,.75];
-function cargoMinimumReds(t){return t.price>=6000000?4:0;}
+function cargoMinimumReds(t){return !t.unrestricted&&t.price>=6000000?4:0;}
 const cargoRedCache=new WeakMap();
 function cargoRedPool(pool){let reds=cargoRedCache.get(pool);if(!reds){reds=pool.filter(it=>it.fixedGrade===5);cargoRedCache.set(pool,reds);}return reds;}
 function cargoVariety(t,items){
- if(t.price<8000000)return true;
+ if(t.unrestricted||t.price<8000000)return true;
  const counts=new Map();for(const it of items){const count=(counts.get(it.key)||0)+1;if(count>2)return false;counts.set(it.key,count);}
  const small=items.filter(it=>it.w===1&&it.h===1);
  return !small.length||(small.filter(it=>(it.value??it.referencePrice)<50000).length<=Math.floor(small.length/3)&&small.filter(it=>(it.value??it.referencePrice)>=200000).length>=Math.ceil(small.length/3));
@@ -244,7 +244,20 @@ function cargoFallback(t,win){
  if(!cargoMeetsOutcome(t,items,win))throw Error('Cargo outcome could not be filled');
  return items;
 }
+// Pick all 50 items before arranging them: size and packing never alter the draw.
+function drawUnrestrictedCargo(t){
+ const chosen=Array.from({length:t.count},()=>pick(catalog)),items=[];
+ let x=0,y=0,rowHeight=0;
+ for(const data of chosen){
+  if(x+data.w>t.w){x=0;y+=rowHeight;rowHeight=0;}
+  if(data.w>t.w||y+data.h>t.h)throw Error('Unrestricted cargo layout is too small');
+  items.push({...data,x,y,value:data.referencePrice,grade:data.fixedGrade,revealed:false});
+  x+=data.w;rowHeight=Math.max(rowHeight,data.h);
+ }
+ return items;
+}
 function drawBalancedCargo(t,index){
+ if(t.unrestricted)return drawUnrestrictedCargo(t);
  const win=Math.random()<cargoBreakEvenChances[index],weights=cargoDrawWeights(index);
  const reds=cargoRedPool(cargoItemPool(t,catalog));
  for(let attempt=0;attempt<64;attempt++){
