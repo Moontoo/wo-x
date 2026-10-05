@@ -1,5 +1,5 @@
 // Categories remain mixed; premium containers enforce the requested colour/size gate.
-const CARGO_BALANCE_REVISION=8;
+const CARGO_BALANCE_REVISION=9;
 const cargoRiskProfiles=[
  {
   "surgeChance": 0.035,
@@ -179,9 +179,50 @@ const cargoBreakEvenChances=[.95,.95,.90,.85,.75,.75];
 function cargoMinimumReds(t){return t.price>=6000000?4:0;}
 const cargoRedCache=new WeakMap();
 function cargoRedPool(pool){let reds=cargoRedCache.get(pool);if(!reds){reds=pool.filter(it=>it.fixedGrade===5);cargoRedCache.set(pool,reds);}return reds;}
-function cargoMeetsOutcome(t,items,win){return items.length===t.count&&new Set(items.filter(it=>it.fixedGrade===5).map(it=>it.key)).size>=cargoMinimumReds(t)&&(items.reduce((sum,it)=>sum+it.value,0)>=t.price)===win;}
+function cargoVariety(t,items){
+ if(t.price<8000000)return true;
+ const counts=new Map();for(const it of items){const count=(counts.get(it.key)||0)+1;if(count>2)return false;counts.set(it.key,count);}
+ const small=items.filter(it=>it.w===1&&it.h===1);
+ return !small.length||(small.filter(it=>(it.value??it.referencePrice)<50000).length<=Math.floor(small.length/3)&&small.filter(it=>(it.value??it.referencePrice)>=200000).length>=Math.ceil(small.length/3));
+}
+function cargoMeetsOutcome(t,items,win){return items.length===t.count&&new Set(items.filter(it=>it.fixedGrade===5).map(it=>it.key)).size>=cargoMinimumReds(t)&&(items.reduce((sum,it)=>sum+it.value,0)>=t.price)===win&&cargoVariety(t,items);}
+function cargoCompactFallback(t,win,small){
+ // Reserve varied affordable items first, then spread a random budget across them.
+ // Keep both outcomes feasible even under a constant random source.
+ const required=cargoMinimumReds(t),high=Math.ceil(t.count/3),low=Math.floor(t.count/3),roles=Array.from({length:t.count},(_,i)=>i<required?'red':i<high?'high':i<t.count-low?'mid':'any');
+ const chosen=[],uses=new Map();
+ const rolePool=role=>small.filter(it=>role==='red'?it.fixedGrade===5&&it.referencePrice>=200000:role==='high'?it.referencePrice>=200000:role==='mid'?it.referencePrice>=50000:true);
+ for(const role of roles){const it=rolePool(role).find(it=>(uses.get(it.key)||0)<(role==='red'?1:2));if(!it)throw Error('No diverse compact baseline');chosen.push(it);uses.set(it.key,(uses.get(it.key)||0)+1);}
+ let value=chosen.reduce((sum,it)=>sum+it.referencePrice,0);
+ const budget=Math.max(value,Math.floor(t.price*(win?1.06+Math.random()*.44:.42+Math.random()*.50)));
+ if(!win&&value>=t.price)throw Error('Diverse compact loss cannot fit');
+ const order=chosen.map((_,i)=>i);for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+ for(let step=0;step<order.length;step++){
+  const i=order[step],old=chosen[i],room=budget-value+old.referencePrice;
+  const options=rolePool(roles[i]).filter(it=>it.referencePrice<=room&&(uses.get(it.key)||0)-(it.key===old.key?1:0)<2&&(roles[i]!=='red'||!chosen.some((other,j)=>j!==i&&j<required&&other.key===it.key)));
+  const share=(budget-value)/(order.length-step),near=options.filter(it=>it.referencePrice<=old.referencePrice+share*(.6+Math.random()*1.6));
+  const candidates=near.length?near:options;if(!candidates.length)continue;
+  // Prefer unused names; repeats remain possible, but never become filler piles.
+  const unused=candidates.filter(it=>!uses.get(it.key)),replacement=pick(unused.length?unused:candidates);
+  uses.set(old.key,uses.get(old.key)-1);uses.set(replacement.key,(uses.get(replacement.key)||0)+1);chosen[i]=replacement;value+=replacement.referencePrice-old.referencePrice;
+ }
+ if(win&&value<t.price){
+  for(const i of order){
+   const old=chosen[i],need=t.price-value+old.referencePrice;
+   const options=rolePool(roles[i]).filter(it=>it.referencePrice>=need&&(uses.get(it.key)||0)-(it.key===old.key?1:0)<2&&(roles[i]!=='red'||!chosen.some((other,j)=>j!==i&&j<required&&other.key===it.key)));
+   if(!options.length)continue;
+   const affordable=options.filter(it=>it.referencePrice<=budget-value+old.referencePrice),replacement=pick(affordable.length?affordable:options.slice(0,3));
+   uses.set(old.key,uses.get(old.key)-1);uses.set(replacement.key,(uses.get(replacement.key)||0)+1);chosen[i]=replacement;value+=replacement.referencePrice-old.referencePrice;break;
+  }
+ }
+ // Scatter the planned items across the box rather than grouping price bands.
+ for(let i=chosen.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[chosen[i],chosen[j]]=[chosen[j],chosen[i]];}
+ const items=pack(t,small,null,cargoRiskProfiles[0].normal,chosen);
+ if(!cargoMeetsOutcome(t,items,win))throw Error('Diverse cargo outcome could not be filled');return items;
+}
 function cargoFallback(t,win){
  const small=cargoItemPool(t,catalog).filter(it=>it.w===1&&it.h===1).sort((a,b)=>a.referencePrice-b.referencePrice);
+ if(t.price>=8000000)return cargoCompactFallback(t,win,small);
  const reds=small.filter(it=>it.fixedGrade===5),required=cargoMinimumReds(t);
  if(!small.length||required&&!reds.length)throw Error('No compact cargo fallback');
  const chosen=Array.from({length:t.count},(_,i)=>i<required?reds[i]:small[0]);
