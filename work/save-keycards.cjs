@@ -1,0 +1,23 @@
+const fs=require('fs'),rows=require('./keycard-rows.json');
+const ds=JSON.parse(fs.readFileSync('work/key-source.json')).jData.data.data.list;
+const extras=[...require('./keycard-extras.json'),...require('./keycard-web-supplement.json')],links=require('./keycard-links.json');
+const userSizes=fs.existsSync('work/keycard-user-sizes.json')?JSON.parse(fs.readFileSync('work/keycard-user-sizes.json')):[];
+const files=['ef4bc80d1f23f22399edc2677f36980a.png','e9a5e1803f5e4c3b070923c65ccc2594.png','9431629c97f969d8d553c17ff3ee58b2.png','376bfb00752eda6c638e45bfe9880211.png','5072a65f7d62bc8aa2e2134cc02f8422.png','12317bc6c0df8e119aeae79833ea114d.png','876e81f3fb18d007054a423b42c38289.png','2c9707cc8d1fd1d8c0b3ca259ed5faa4.png'];
+const starts=[0,15,17,30,42,57,60,73],colors=['白','绿','蓝','紫','金','红'];
+const items=rows.map(([name,price,grade,screenshot],idx)=>{
+ const id=idx+1,d=ds.find(x=>x.objectName===name),e=extras.find(x=>x.id===id),u=userSizes.find(x=>x.id===id),l=links.find(x=>x.name===name||name==='铁路通道'&&x.name==='铁路通道钥匙'),local=idx-starts[screenshot-1],columns=screenshot===2?2:3;
+ const width=u?u.width:e?e.width:d?d.length:null,height=u?u.height:e?e.height:d?d.width:null;
+ const source=u?'用户在当前聊天确认房卡占格':e?e.source:d?'https://github.com/jiansenc/DeltaForceData/blob/main/public/json/props/key.json':null;
+ return {id,name,category:'房卡',price,priceSource:'用户截图显示价格，仅作游戏参考价',screenshot,screenshotFile:files[screenshot-1],row:Math.floor(local/columns)+1,column:local%columns+1,grade,color:colors[grade],gradeSource:'用户截图标签底色',width,height,cells:width===null?null:width*height,orientation:width===null?null:width===height?'方形':width>height?'横向':'竖向',sizeRequired:true,sizeStatus:u?'用户已确认':source?'已查到网络尺寸，用户未逐项复核':'待用户确认占格',sizeSource:source,...(u?{sizeSourceType:'用户确认'}:{}),...(source?{sourceFields:u||e?{width,height}:{length:d.length,width:d.width}}:{}),...(l?{lookupURL:l.url}:{}),...(d?{objectID:d.objectID,officialIconURL:d.pic}:e?.officialIconURL?{officialIconURL:e.officialIconURL}:{})};
+});
+if(items.length!==80||new Set(items.map(x=>x.name)).size!==80)throw Error('Card count mismatch');
+for(const x of items)if(!Number.isFinite(x.price)||(x.width!==null&&(!Number.isInteger(x.width)||!Number.isInteger(x.height)||x.cells!==x.width*x.height)))throw Error('Invalid data '+x.name);
+const pending=items.filter(x=>x.width===null).map(x=>({id:x.id,name:x.name}));
+const data={category:'房卡',checkedAt:'2026-10-05',count:items.length,sizeConvention:'物品本身宽×高；网络数据length为横向格数、width为纵向格数。',pendingSizeItems:pending,status:'80张房卡已建档；'+(pending.length?'73张已查到占格，7张待用户确认；':'全部房卡占格已确认或查到；')+'待统一接入游戏',items};
+fs.writeFileSync('outputs/房卡数据.json',JSON.stringify(data,null,2));
+let md='# 房卡清单\n\n共80张，按8张截图从左到右、从上到下连续编号。名称、品阶和价格保留截图值。核查日期：2026-10-05。尺寸为物品本身的**宽×高**。\n\n'+(pending.length?'73张已查到网络尺寸，7张待用户确认，未推测填入格数。':'80张均已记录占格，尺寸来源逐项保留。')+'\n\n| 编号 | 名称 | 品阶 | 截图参考价 | 宽×高 | 占格 | 格数来源 |\n|---:|---|---|---:|---|---:|---|\n';
+for(const x of items)md+='| '+[x.id,x.name,x.color,x.price.toLocaleString('en-US'),x.width===null?'待确认':x.width+'×'+x.height,x.cells??'',x.sizeSourceType==='用户确认'?'用户确认':x.sizeSource?'[查阅]('+x.sizeSource+')':'待用户确认'].join(' | ')+' |\n';
+if(pending.length)md+='\n待确认占格：'+pending.map(x=>'第'+x.id+'张“'+x.name+'”').join('、')+'。\n';
+md+='\n网上资料名为“铁路通道钥匙”，清单保留截图名称“铁路通道”。价格不使用网络交易价覆盖。房卡资料等待统一接入游戏。\n';
+fs.writeFileSync('outputs/房卡清单.md',md);
+console.log(JSON.stringify({cards:items.length,pendingSizeItems:pending,summary:require('./exclude-unpriced.cjs')()},null,2));

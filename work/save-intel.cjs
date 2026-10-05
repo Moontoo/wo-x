@@ -1,0 +1,33 @@
+const fs=require('fs');
+const rows=require('./intel-rows.json'),extras=require('./intel-extras.json');
+const ds=JSON.parse(fs.readFileSync('work/collection-source.json')).jData.data.data.list;
+const github='https://github.com/jiansenc/DeltaForceData/blob/main/public/json/props/collection.json';
+const files=['b859ba5f9279864af32f73d952f89e8a.png','28b2ce701f73b8a8192391c81c5b6b18.png','9e5b0c7193b754fa71a5a196b092a31c.png'];
+const colors=['白','绿','蓝','紫','金','红'];
+const items=rows.map(([name,price],idx)=>{
+ const d=ds.find(x=>x.objectName===name),e=extras.find(x=>x.name===name);
+ const width=e?e.width:d?d.length:null,height=e?e.height:d?d.width:null;
+ const grade=idx<7?5:idx<18?4:idx<24?3:idx<32?2:idx<40?1:0;
+ const screenshot=Math.floor(idx/15)+1,local=idx%15,known=width!==null&&height!==null;
+ const item={id:idx+1,name,category:'资料情报',price,priceSource:price===null?'用户截图显示 --，未提供价格':'用户截图显示价格，仅作游戏参考价',screenshot,screenshotFile:files[screenshot-1],row:Math.floor(local/3)+1,column:local%3+1,width,height,cells:known?width*height:null,orientation:known?(width===height?'方形':width>height?'横向':'竖向'):'待确认',grade,color:colors[grade],gradeSource:'用户截图标签底色',sizeStatus:known?'已查到网络尺寸，用户未逐项复核':'未查到可靠尺寸，已请用户确认',sizeSource:e?e.source:d?github:null,sourceFields:e?{width,height}:d?{length:d.length,width:d.width}:null,...(d?{objectID:d.objectID,officialIconURL:d.pic}:e?.officialIconURL?{officialIconURL:e.officialIconURL}:{})};
+ if(!known)item.note='“破损的脑机”在现有数据集及已查询详情中缺少可核验的占格信息；不根据截图形状猜测。';
+ if(price===null)item.note='截图参考价缺失，保存为 null；后续接入游戏时再确定游戏售价。';
+ return item;
+});
+if(items.length!==45||new Set(items.map(x=>x.name)).size!==45)throw Error('Count/duplicate mismatch');
+if(items.some(x=>x.width!==null&&(!Number.isInteger(x.width)||!Number.isInteger(x.height)||x.width<1||x.height<1)))throw Error('Invalid size');
+const pending=items.filter(x=>x.width===null).map(x=>({id:x.id,name:x.name}));
+const data={category:'资料情报',checkedAt:'2026-10-05',count:45,sizeConvention:'宽×高；数据源 length 对应横向格数、width 对应纵向格数；不按物品图片视觉长宽猜格数。',status:'资料已整理，待剩余分类统一接入；破损的脑机格数待用户确认',pendingSizeItems:pending,items};
+for(const p of ['work/intel-items.json','outputs/资料情报数据.json'])fs.writeFileSync(p,JSON.stringify(data,null,2));
+let md='# 资料情报清单\n\n共 45 件，按三张截图从左到右、从上到下编号。尺寸为**宽×高**，品阶和价格按截图保存。44件格数已查到网络资料，第32件“破损的脑机”格数待确认。核查日期：2026-10-05。\n\n| 编号 | 名称 | 品阶 | 宽×高 | 占格 | 方向 | 截图参考价 | 格数来源 |\n|---:|---|---|---|---:|---|---:|---|\n';
+for(const x of items)md+='| '+[x.id,x.name,x.color,x.width===null?'待确认':x.width+'×'+x.height,x.cells??'待确认',x.orientation,x.price===null?'--（缺失）':x.price.toLocaleString('en-US'),x.sizeSource?'[查阅]('+x.sizeSource+')':'待确认'].join(' | ')+' |\n';
+md+='\n## 核查备注\n\n';
+for(const x of items.filter(x=>x.note))md+='- 第 '+x.id+' 件，'+x.name+'：'+x.note+'\n';
+md+='\n格数来源为 DeltaForceData 社区数据集和三角洲小涛查（Orzice）物品详情。保留截图价格，不用实时交易价覆盖截图参考价。格数资料尚未由用户逐项复核，若与用户实际游戏格子画面不符，以用户提供的画面为准。\n\n本次保存资料清单，未修改游戏；等分类收齐后统一处理图片与游戏接入。\n';
+fs.writeFileSync('outputs/资料情报清单.md',md);
+const catalogNames=['电子物品','医疗道具','家居物品','工具材料','工艺藏品','资料情报'];
+const catalogs=catalogNames.map(category=>{const file=category+'数据.json';return {category,file,count:JSON.parse(fs.readFileSync('outputs/'+file,'utf8')).items.length};});
+fs.writeFileSync('outputs/物品分类汇总.json',JSON.stringify({updatedAt:'2026-10-05',total:catalogs.reduce((n,c)=>n+c.count,0),catalogs,remainingCategories:['能源燃料'],pendingSizeItems:pending.map(x=>({category:'资料情报',...x})),status:'电子物品已接入游戏；其余分类资料已建档，等待能源燃料分类统一接入；资料情报中1件尺寸待确认'},null,2));
+const grades={},sizes={};for(const x of items){grades[x.color]=(grades[x.color]||0)+1;const key=x.width===null?'待确认':x.width+'×'+x.height;sizes[key]=(sizes[key]||0)+1;}
+console.log(JSON.stringify({count:items.length,grades,sizes,pending,total:catalogs.reduce((n,c)=>n+c.count,0),missingPrice:items.filter(x=>x.price===null).map(x=>({id:x.id,name:x.name})),sourceCounts:{dataset:items.filter(x=>x.sizeSource===github).length,detail:items.filter(x=>x.sizeSource&&x.sizeSource!==github).length}},null,2));
+console.log('应用无价格物品剔除规则：',JSON.stringify(require('./exclude-unpriced.cjs')()));

@@ -1,0 +1,64 @@
+{
+  "updatedAt": "2026-10-05",
+  "total": 491,
+  "catalogs": [
+    {
+      "category": "电子物品",
+      "file": "电子物品数据.json",
+      "count": 64
+    },
+    {
+      "category": "医疗道具",
+      "file": "医疗道具数据.json",
+      "count": 36
+    },
+    {
+      "category": "家居物品",
+      "file": "家居物品数据.json",
+      "count": 45
+    },
+    {
+      "category": "工具材料",
+      "file": "工具材料数据.json",
+      "count": 51
+    },
+    {
+      "category": "工艺藏品",
+      "file": "工艺藏品数据.json",
+      "count": 66
+    },
+    {
+      "category": "资料情报",
+      "file": "资料情报数据.json",
+      "count": 43
+    },
+    {
+      "category": "能源燃料",
+      "file": "能源燃料数据.json",
+      "count": 27
+    },
+    {
+      "category": "贵重物品",
+      "file": "贵重物品数据.json",
+      "count": 1
+    },
+    {
+      "category": "装备",
+      "file": "装备数据.json",
+      "count": 78
+    },
+    {
+      "category": "房卡",
+      "file": "房卡数据.json",
+      "count": 80
+    }
+  ],
+  "remainingCategories": [],
+  "pendingSizeItems": [],
+  "missingPriceItems": [],
+  "status": "全部491件物品已接入游戏，价格使用截图标价，品级仅以颜色显示",
+  "excludedUnpricedCount": 1,
+  "sizeOmittedItems": [],
+  "count": 491,
+  "excludedManualCount": 1
+}

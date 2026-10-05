@@ -1,0 +1,146 @@
+[
+  {
+    "root": "F:/WeGameApps/rail_apps/DeltaForce(2001918)/DeltaForce/PackContent/Paks",
+    "count": 51,
+    "standard": 51,
+    "indexFlag1": 51,
+    "indexFlag0": 0,
+    "versions": [
+      11
+    ],
+    "samples": [
+      {
+        "name": "pak-0-0-pakchunk180-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 188352
+      },
+      {
+        "name": "pak-0-0-pakchunk180optional-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 39968
+      },
+      {
+        "name": "pak-0-0-pakchunk181-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 496224
+      }
+    ]
+  },
+  {
+    "root": "F:/WeGameApps/rail_apps/DeltaForce(2001918)/DeltaForce/Content/Paks",
+    "count": 257,
+    "standard": 257,
+    "indexFlag1": 257,
+    "indexFlag0": 0,
+    "versions": [
+      11
+    ],
+    "samples": [
+      {
+        "name": "1.101.37117.36.14_WindowsNoEditor_37131_P.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 1968
+      },
+      {
+        "name": "pak-0-0-pakchunk1-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 199488
+      },
+      {
+        "name": "pak-0-0-pakchunk171-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 26880
+      }
+    ]
+  },
+  {
+    "root": "E:/Delta Force/Delta Force/DeltaForce/Content/Paks",
+    "count": 321,
+    "standard": 321,
+    "indexFlag1": 321,
+    "indexFlag0": 0,
+    "versions": [
+      11
+    ],
+    "samples": [
+      {
+        "name": "1.102.37117.80.10_WindowsNoEditor_37127_P.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 1968
+      },
+      {
+        "name": "pak-0-0-pakchunk1-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 229696
+      },
+      {
+        "name": "pak-0-0-pakchunk171-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 44064
+      }
+    ]
+  },
+  {
+    "root": "E:/Delta Force/Delta Force/DeltaForce/PackContent/Paks",
+    "count": 24,
+    "standard": 24,
+    "indexFlag1": 24,
+    "indexFlag0": 0,
+    "versions": [
+      11
+    ],
+    "samples": [
+      {
+        "name": "pak-0-0-pakchunk179-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 258896
+      },
+      {
+        "name": "pak-0-0-pakchunk179optional-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 57024
+      },
+      {
+        "name": "pak-0-0-pakchunk181-WindowsClient.pak",
+        "standardFooter": true,
+        "version": 11,
+        "indexFlagByte": 1,
+        "indexWithinFile": true,
+        "indexSize": 641680
+      }
+    ]
+  }
+]

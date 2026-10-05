@@ -1,0 +1,38 @@
+{
+  "category": "贵重物品",
+  "checkedAt": "2026-10-05",
+  "count": 1,
+  "sizeConvention": "宽×高；网络数据 length 对应横向格数、width 对应纵向格数。单件详情图的亮色小格直接对应占格宽高。",
+  "status": "已接入游戏；价格使用截图标价，品级仅以颜色显示",
+  "items": [
+    {
+      "name": "乙巳玄武",
+      "category": "贵重物品",
+      "price": 1000000,
+      "priceSource": "用户物品详情截图显示价格，仅作游戏参考价",
+      "screenshot": 4,
+      "screenshotFile": "d52d5556b4d63e1bae94be0ce47b1726.png",
+      "row": 1,
+      "column": 1,
+      "width": 2,
+      "height": 2,
+      "cells": 4,
+      "orientation": "方形",
+      "grade": 5,
+      "color": "红",
+      "gradeSource": "用户截图左上角红色品阶图标",
+      "categorySource": "用户截图价格旁的分类文字",
+      "sizeStatus": "已按用户截图右下角亮色占格小图核对",
+      "sizeSourceType": "用户截图",
+      "sizeSource": "d52d5556b4d63e1bae94be0ce47b1726.png",
+      "sourceFields": {
+        "width": 2,
+        "height": 2
+      },
+      "id": 1
+    }
+  ],
+  "excludedUnpricedCount": 0,
+  "pendingSizeItems": [],
+  "excludedManualCount": 0
+}

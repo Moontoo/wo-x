@@ -1,0 +1,60 @@
+{
+  "updatedAt": "2026-10-05",
+  "count": 2,
+  "policy": "剔除没有截图价格的物品，以及用户明确要求剔除的物品",
+  "items": [
+    {
+      "id": 39,
+      "name": "建筑图纸5号",
+      "category": "资料情报",
+      "price": null,
+      "priceSource": "用户截图显示 --，未提供价格",
+      "screenshot": 3,
+      "screenshotFile": "9e5b0c7193b754fa71a5a196b092a31c.png",
+      "row": 3,
+      "column": 3,
+      "width": 2,
+      "height": 1,
+      "cells": 2,
+      "orientation": "横向",
+      "grade": 1,
+      "color": "绿",
+      "gradeSource": "用户截图标签底色",
+      "sizeStatus": "已查到网络尺寸，用户未逐项复核",
+      "sizeSource": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/props/collection.json",
+      "sourceFields": {
+        "length": 2,
+        "width": 1
+      },
+      "objectID": 15070010009,
+      "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15070010009.png",
+      "note": "截图参考价缺失，保存为 null；后续接入游戏时再确定游戏售价。",
+      "excludedAt": "2026-10-05",
+      "exclusionReason": "用户要求剔除没有价格的物品"
+    },
+    {
+      "id": 32,
+      "name": "破损的脑机",
+      "category": "资料情报",
+      "price": 5593,
+      "priceSource": "用户截图显示价格，仅作游戏参考价",
+      "screenshot": 3,
+      "screenshotFile": "9e5b0c7193b754fa71a5a196b092a31c.png",
+      "row": 1,
+      "column": 2,
+      "width": null,
+      "height": null,
+      "cells": null,
+      "orientation": "待确认",
+      "grade": 2,
+      "color": "蓝",
+      "gradeSource": "用户截图标签底色",
+      "sizeStatus": "未查到可靠尺寸，已请用户确认",
+      "sizeSource": null,
+      "sourceFields": null,
+      "note": "“破损的脑机”在现有数据集及已查询详情中缺少可核验的占格信息；不根据截图形状猜测。",
+      "excludedAt": "2026-10-05",
+      "exclusionReason": "用户明确要求剔除该物品"
+    }
+  ]
+}

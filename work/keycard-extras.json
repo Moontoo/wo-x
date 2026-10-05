@@ -1,0 +1,154 @@
+[
+  {
+    "id": 28,
+    "name": "地下通道钥匙",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/696",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E9%9B%B6%E5%8F%B7%E5%A4%A7%E5%9D%9D%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 44,
+    "name": "总裁会议室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/722",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E9%87%91%E5%8D%A1.png"
+  },
+  {
+    "id": 48,
+    "name": "Relink植入手术室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/728",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 49,
+    "name": "医疗会议室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/723",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 51,
+    "name": "1号审讯室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/720",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 52,
+    "name": "生物数据机房",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/719",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 53,
+    "name": "门诊室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/729",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 55,
+    "name": "巴别塔供电权限卡",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/726",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 56,
+    "name": "海洋监测厅",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/730",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/key/p_%E5%B7%B4%E5%85%8B%E4%BB%80%E7%99%BD%E5%8D%A1.png"
+  },
+  {
+    "id": 61,
+    "name": "典狱长收藏室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/737",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500004.png"
+  },
+  {
+    "id": 62,
+    "name": "三级监狱权限卡",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/743",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500013.png"
+  },
+  {
+    "id": 63,
+    "name": "生物样本室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/740",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500002.png"
+  },
+  {
+    "id": 64,
+    "name": "监狱审讯室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/744",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500001.png"
+  },
+  {
+    "id": 65,
+    "name": "二级监狱权限卡",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/734",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500012.png"
+  },
+  {
+    "id": 66,
+    "name": "人偶影印室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/735",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500005.png"
+  },
+  {
+    "id": 67,
+    "name": "水位控制室",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/736",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500010.png"
+  },
+  {
+    "id": 68,
+    "name": "食堂洗碗间",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/746",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500009.png"
+  },
+  {
+    "id": 69,
+    "name": "一级监狱权限卡",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/738",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500011.png"
+  },
+  {
+    "id": 71,
+    "name": "仓库区监控房",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/739",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15050500007.png"
+  }
+]

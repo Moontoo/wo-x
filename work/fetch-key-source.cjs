@@ -1,0 +1,2 @@
+const fs=require('fs');
+(async()=>{const r=await fetch('https://raw.githubusercontent.com/jiansenc/DeltaForceData/refs/heads/main/public/json/props/key.json');if(!r.ok)throw Error(r.status);const d=await r.json();fs.writeFileSync('work/key-source.json',JSON.stringify(d,null,2));const list=d.jData.data.data.list;console.log(JSON.stringify({count:list.length,first:list[0],items:list.map(x=>({name:x.objectName,width:x.length,height:x.width}))},null,2));})().catch(e=>{console.error(e);process.exitCode=1});

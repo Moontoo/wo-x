@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path'),out=path.resolve(__dirname,'../outputs/电子物品图集'),assets=path.resolve(__dirname,'../outputs/harbor-bid/dist/assets');let html=fs.readFileSync(out+'/预览.html','utf8');for(let i=1;i<=5;i++)html=html.replaceAll('电子物品图集-'+i+(i>=4?'-清理版':'')+'.png','electronics-sheet-'+i+'-v1.png');fs.writeFileSync(assets+'/preview.html',html);

@@ -1,0 +1,156 @@
+[
+  {
+    "name": "反应堆冷却核心",
+    "width": 3,
+    "height": 3,
+    "source": "https://orzice.com/v/info/1318",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050221.png"
+  },
+  {
+    "name": "微型反应炉",
+    "width": 3,
+    "height": 3,
+    "source": "https://orzice.com/v/info/1068",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050098.png"
+  },
+  {
+    "name": "试制聚变供能单元",
+    "width": 3,
+    "height": 3,
+    "source": "https://orzice.com/v/info/1247",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050176.png"
+  },
+  {
+    "name": "动力电池组",
+    "width": 4,
+    "height": 3,
+    "source": "https://orzice.com/v/info/1066",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050100.png"
+  },
+  {
+    "name": "装甲车电池",
+    "width": 3,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1067",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050099.png"
+  },
+  {
+    "name": "高能瓦斯罐",
+    "width": 2,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1224",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050177.png"
+  },
+  {
+    "name": "电子氟化液",
+    "width": 2,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1259",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050190.png"
+  },
+  {
+    "name": "高性能燃油",
+    "width": 3,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1209",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050169.png"
+  },
+  {
+    "name": "微型燃料棒",
+    "width": 2,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1319",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050223.png"
+  },
+  {
+    "name": "航天冷却剂",
+    "width": 1,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1284",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050210.png"
+  },
+  {
+    "name": "固体燃料",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1017",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050101.png"
+  },
+  {
+    "name": "军用露营灯",
+    "width": 1,
+    "height": 3,
+    "source": "https://orzice.com/v/info/1014",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050105.png"
+  },
+  {
+    "name": "燃气喷灯",
+    "width": 1,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1016",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050103.png"
+  },
+  {
+    "name": "便携生存套组",
+    "width": 2,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1012",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050106.png"
+  },
+  {
+    "name": "信号棒",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1008",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050102.png"
+  },
+  {
+    "name": "轻型户外炉具",
+    "width": 2,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1011",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050109.png"
+  },
+  {
+    "name": "便携燃料瓶",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1323",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050228.png"
+  },
+  {
+    "name": "狩猎火柴",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1005",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050107.png"
+  },
+  {
+    "name": "多用途电池",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1006",
+    "officialIconURL": "https://playerhub.df.qq.com/playerhub/60004/object/15080050108.png"
+  },
+  {
+    "name": "充电电池组",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1009",
+    "evidence": "网页搜索返回的详情正文"
+  },
+  {
+    "name": "9V电池",
+    "width": 1,
+    "height": 1,
+    "source": "https://orzice.com/v/info/1003",
+    "evidence": "网页搜索返回的详情正文"
+  },
+  {
+    "name": "盒装蜡烛",
+    "width": 2,
+    "height": 2,
+    "source": "https://orzice.com/v/info/1004",
+    "evidence": "网页搜索返回的详情正文"
+  }
+]

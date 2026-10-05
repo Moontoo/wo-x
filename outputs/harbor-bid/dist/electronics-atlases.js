@@ -1,0 +1,426 @@
+const electronicAtlases=[
+  {
+    "src": "assets/electronics-sheet-1-v1.png",
+    "width": 1660,
+    "height": 947,
+    "rows": 5,
+    "cells": [
+      {
+        "x": 190,
+        "y": 10,
+        "width": 201,
+        "height": 179
+      },
+      {
+        "x": 723,
+        "y": 2,
+        "width": 207,
+        "height": 187
+      },
+      {
+        "x": 1229,
+        "y": 14,
+        "width": 258,
+        "height": 175
+      },
+      {
+        "x": 217,
+        "y": 189,
+        "width": 146,
+        "height": 190
+      },
+      {
+        "x": 676,
+        "y": 189,
+        "width": 307,
+        "height": 181
+      },
+      {
+        "x": 1230,
+        "y": 189,
+        "width": 235,
+        "height": 190
+      },
+      {
+        "x": 173,
+        "y": 379,
+        "width": 241,
+        "height": 183
+      },
+      {
+        "x": 703,
+        "y": 380,
+        "width": 228,
+        "height": 174
+      },
+      {
+        "x": 1237,
+        "y": 379,
+        "width": 223,
+        "height": 186
+      },
+      {
+        "x": 169,
+        "y": 570,
+        "width": 259,
+        "height": 177
+      },
+      {
+        "x": 685,
+        "y": 568,
+        "width": 280,
+        "height": 190
+      },
+      {
+        "x": 1178,
+        "y": 574,
+        "width": 363,
+        "height": 184
+      },
+      {
+        "x": 184,
+        "y": 758,
+        "width": 218,
+        "height": 183
+      },
+      {
+        "x": 722,
+        "y": 758,
+        "width": 206,
+        "height": 173
+      },
+      {
+        "x": 1271,
+        "y": 758,
+        "width": 184,
+        "height": 185
+      }
+    ]
+  },
+  {
+    "src": "assets/electronics-sheet-2-v1.png",
+    "width": 1374,
+    "height": 1145,
+    "rows": 5,
+    "cells": [
+      {
+        "x": 128,
+        "y": 22,
+        "width": 243,
+        "height": 207
+      },
+      {
+        "x": 586,
+        "y": 9,
+        "width": 202,
+        "height": 220
+      },
+      {
+        "x": 1064,
+        "y": 18,
+        "width": 192,
+        "height": 211
+      },
+      {
+        "x": 123,
+        "y": 229,
+        "width": 225,
+        "height": 229
+      },
+      {
+        "x": 482,
+        "y": 229,
+        "width": 419,
+        "height": 229
+      },
+      {
+        "x": 1043,
+        "y": 229,
+        "width": 222,
+        "height": 229
+      },
+      {
+        "x": 106,
+        "y": 458,
+        "width": 252,
+        "height": 229
+      },
+      {
+        "x": 481,
+        "y": 458,
+        "width": 424,
+        "height": 229
+      },
+      {
+        "x": 1114,
+        "y": 458,
+        "width": 101,
+        "height": 229
+      },
+      {
+        "x": 119,
+        "y": 687,
+        "width": 224,
+        "height": 229
+      },
+      {
+        "x": 566,
+        "y": 687,
+        "width": 323,
+        "height": 229
+      },
+      {
+        "x": 1063,
+        "y": 687,
+        "width": 187,
+        "height": 229
+      },
+      {
+        "x": 120,
+        "y": 916,
+        "width": 218,
+        "height": 217
+      },
+      {
+        "x": 581,
+        "y": 916,
+        "width": 214,
+        "height": 229
+      },
+      {
+        "x": 1045,
+        "y": 916,
+        "width": 230,
+        "height": 228
+      }
+    ]
+  },
+  {
+    "src": "assets/electronics-sheet-3-v1.png",
+    "width": 971,
+    "height": 1619,
+    "rows": 5,
+    "cells": [
+      {
+        "x": 31,
+        "y": 75,
+        "width": 277,
+        "height": 249
+      },
+      {
+        "x": 402,
+        "y": 66,
+        "width": 170,
+        "height": 251
+      },
+      {
+        "x": 687,
+        "y": 50,
+        "width": 232,
+        "height": 274
+      },
+      {
+        "x": 18,
+        "y": 413,
+        "width": 306,
+        "height": 191
+      },
+      {
+        "x": 339,
+        "y": 371,
+        "width": 283,
+        "height": 276
+      },
+      {
+        "x": 650,
+        "y": 324,
+        "width": 281,
+        "height": 324
+      },
+      {
+        "x": 7,
+        "y": 711,
+        "width": 315,
+        "height": 223
+      },
+      {
+        "x": 369,
+        "y": 713,
+        "width": 278,
+        "height": 234
+      },
+      {
+        "x": 647,
+        "y": 648,
+        "width": 315,
+        "height": 281
+      },
+      {
+        "x": 56,
+        "y": 993,
+        "width": 230,
+        "height": 302
+      },
+      {
+        "x": 332,
+        "y": 1029,
+        "width": 304,
+        "height": 195
+      },
+      {
+        "x": 665,
+        "y": 989,
+        "width": 280,
+        "height": 254
+      },
+      {
+        "x": 53,
+        "y": 1295,
+        "width": 218,
+        "height": 264
+      },
+      {
+        "x": 336,
+        "y": 1299,
+        "width": 311,
+        "height": 268
+      },
+      {
+        "x": 647,
+        "y": 1354,
+        "width": 308,
+        "height": 155
+      }
+    ]
+  },
+  {
+    "src": "assets/electronics-sheet-4-v1.png",
+    "width": 1024,
+    "height": 1536,
+    "rows": 5,
+    "cells": [
+      {
+        "x": 31,
+        "y": 48,
+        "width": 283,
+        "height": 208
+      },
+      {
+        "x": 383,
+        "y": 60,
+        "width": 258,
+        "height": 215
+      },
+      {
+        "x": 705,
+        "y": 37,
+        "width": 282,
+        "height": 270
+      },
+      {
+        "x": 55,
+        "y": 355,
+        "width": 232,
+        "height": 255
+      },
+      {
+        "x": 398,
+        "y": 340,
+        "width": 247,
+        "height": 274
+      },
+      {
+        "x": 755,
+        "y": 307,
+        "width": 185,
+        "height": 296
+      },
+      {
+        "x": 68,
+        "y": 648,
+        "width": 208,
+        "height": 274
+      },
+      {
+        "x": 400,
+        "y": 671,
+        "width": 237,
+        "height": 239
+      },
+      {
+        "x": 722,
+        "y": 648,
+        "width": 257,
+        "height": 274
+      },
+      {
+        "x": 35,
+        "y": 967,
+        "width": 285,
+        "height": 245
+      },
+      {
+        "x": 365,
+        "y": 951,
+        "width": 318,
+        "height": 278
+      },
+      {
+        "x": 683,
+        "y": 922,
+        "width": 326,
+        "height": 269
+      },
+      {
+        "x": 40,
+        "y": 1245,
+        "width": 272,
+        "height": 266
+      },
+      {
+        "x": 365,
+        "y": 1229,
+        "width": 296,
+        "height": 292
+      },
+      {
+        "x": 763,
+        "y": 1276,
+        "width": 149,
+        "height": 247
+      }
+    ]
+  },
+  {
+    "src": "assets/electronics-sheet-5-v1.png",
+    "width": 1536,
+    "height": 1024,
+    "rows": 2,
+    "cells": [
+      {
+        "x": 43,
+        "y": 78,
+        "width": 436,
+        "height": 406
+      },
+      {
+        "x": 568,
+        "y": 111,
+        "width": 429,
+        "height": 359
+      },
+      {
+        "x": 1070,
+        "y": 99,
+        "width": 411,
+        "height": 388
+      },
+      {
+        "x": 73,
+        "y": 607,
+        "width": 369,
+        "height": 329
+      }
+    ]
+  }
+];
