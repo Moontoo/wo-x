@@ -13,6 +13,6 @@ const items=vm.runInContext('catalog',ctx),types=vm.runInContext('cargoTypes',ct
 for(const type of types)for(const item of items){const packed=pack(type,[item],item);assert.equal(packed.length>0,allows(type,item));if(packed.length)assert.equal(packed[0].key,item.key);}
 assert(allows(types[3],{fixedGrade:0,w:2,h:4}));assert(allows(types[3],{fixedGrade:1,w:3,h:3}));assert(!allows(types[3],{fixedGrade:0,w:4,h:2}));
 vm.runInContext(`s.cash=1234567;borrowLoan(1000000);s.stock=[{...s.offers[0].items[0],revealed:true,record:'old-box'}];s.current=s.offers[1];persist();`,ctx);
-const old=JSON.parse(saved.get('harbor-grid-screenshot-v2'));old.balanceRevision=7;saved.set('harbor-grid-screenshot-v2',JSON.stringify(old));load();const next=JSON.parse(saved.get('harbor-grid-screenshot-v2'));
-for(const name of ['cash','loan','stock','records','current'])assert.deepStrictEqual(next[name],old[name]);assert.equal(next.offers.length,0);assert.equal(next.balanceRevision,8);
+const old=JSON.parse(saved.get('harbor-grid-screenshot-v2'));old.balanceRevision=8;saved.set('harbor-grid-screenshot-v2',JSON.stringify(old));load();const next=JSON.parse(saved.get('harbor-grid-screenshot-v2'));
+for(const name of ['cash','loan','stock','records','current'])assert.deepStrictEqual(next[name],old[name]);assert.equal(next.offers.length,0);assert.equal(next.balanceRevision,9);
 console.log(JSON.stringify({samples:120000,report,migration:'cash, loans, stock, records and purchased cargo preserved; only unopened offers replaced',rule:'requested break-even chances; premium has at least four distinct red items; white/green only exact 3x3 or 2x4; bounded fallback verified'},null,2));

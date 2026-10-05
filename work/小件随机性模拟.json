@@ -1,0 +1,85 @@
+{
+  "samples": 120000,
+  "report": [
+    {
+      "tier": 1,
+      "price": 1500000,
+      "samples": 20000,
+      "meanReturn": 1.1592401874333333,
+      "breakEvenChance": 0.9482,
+      "doubleChance": 0.0235,
+      "lossHalfChance": 0.00915,
+      "medianValue": 1681776,
+      "p95Value": 1908128,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 2,
+      "price": 2500000,
+      "samples": 20000,
+      "meanReturn": 1.16577620762,
+      "breakEvenChance": 0.95175,
+      "doubleChance": 0.023,
+      "lossHalfChance": 0.00675,
+      "medianValue": 2809105,
+      "p95Value": 3443238,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 3,
+      "price": 4000000,
+      "samples": 20000,
+      "meanReturn": 1.1558044883874998,
+      "breakEvenChance": 0.8997,
+      "doubleChance": 0.0141,
+      "lossHalfChance": 0.0091,
+      "medianValue": 4522060,
+      "p95Value": 5595712,
+      "invalid": 0,
+      "minReds": 0
+    },
+    {
+      "tier": 4,
+      "price": 6000000,
+      "samples": 20000,
+      "meanReturn": 1.3320485838833334,
+      "breakEvenChance": 0.8526,
+      "doubleChance": 0.073,
+      "lossHalfChance": 0.0174,
+      "medianValue": 7050433,
+      "p95Value": 13788523,
+      "invalid": 0,
+      "minReds": 4
+    },
+    {
+      "tier": 5,
+      "price": 8000000,
+      "samples": 20000,
+      "meanReturn": 1.27485699565,
+      "breakEvenChance": 0.7466,
+      "doubleChance": 0.08345,
+      "lossHalfChance": 0.0222,
+      "medianValue": 8987791,
+      "p95Value": 18717366,
+      "invalid": 0,
+      "minReds": 4
+    },
+    {
+      "tier": 6,
+      "price": 10000000,
+      "samples": 20000,
+      "meanReturn": 1.301510126755,
+      "breakEvenChance": 0.75215,
+      "doubleChance": 0.1077,
+      "lossHalfChance": 0.0305,
+      "medianValue": 11284430,
+      "p95Value": 24523108,
+      "invalid": 0,
+      "minReds": 4
+    }
+  ],
+  "migration": "cash, loans, stock, records and purchased cargo preserved; only unopened offers replaced",
+  "rule": "requested break-even chances; premium has at least four distinct red items; white/green only exact 3x3 or 2x4; bounded fallback verified"
+}
